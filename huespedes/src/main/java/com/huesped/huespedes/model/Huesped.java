@@ -1,4 +1,4 @@
-package com.example.hostadmin.model;
+package com.huesped.huespedes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

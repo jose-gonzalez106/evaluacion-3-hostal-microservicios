@@ -1,17 +1,17 @@
-package com.example.hostadmin.service;
+package com.empleado.empleados.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.hostadmin.DTO.EmpleadoDTO;
+import com.empleado.empleados.DTO.EmpleadoDTO;
+import com.empleado.empleados.model.Empleado;
+import com.empleado.empleados.repository.EmpleadoRepository;
 import com.example.hostadmin.exceptions.RecursoNoEncontradoException;
 import com.example.hostadmin.exceptions.ValidacionException;
-import com.example.hostadmin.model.Empleado;
 import com.example.hostadmin.model.Hostal;
 import com.example.hostadmin.model.TipoEmpleado;
-import com.example.hostadmin.repository.EmpleadoRepository;
 import com.example.hostadmin.repository.HostalRepository;
 import com.example.hostadmin.repository.TipoEmpleadoRepository;
 

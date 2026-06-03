@@ -1,5 +1,7 @@
-package com.example.hostadmin.model;
+package com.empleado.empleados.model;
 
+import com.example.hostadmin.model.Hostal;
+import com.example.hostadmin.model.TipoEmpleado;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;

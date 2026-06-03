@@ -1,17 +1,17 @@
-package com.example.hostadmin.service;
+package com.huesped.huespedes.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.hostadmin.DTO.HuespedDTO;
 import com.example.hostadmin.exceptions.RecursoNoEncontradoException;
 import com.example.hostadmin.exceptions.ValidacionException;
 import com.example.hostadmin.model.Comuna;
-import com.example.hostadmin.model.Huesped;
 import com.example.hostadmin.repository.ComunaRepository;
-import com.example.hostadmin.repository.HuespedRepository;
+import com.huesped.huespedes.DTO.HuespedDTO;
+import com.huesped.huespedes.model.Huesped;
+import com.huesped.huespedes.repository.HuespedRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

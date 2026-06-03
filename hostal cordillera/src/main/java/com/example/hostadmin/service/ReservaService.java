@@ -12,11 +12,11 @@ import com.example.hostadmin.DTO.ReservaDTO;
 import com.example.hostadmin.exceptions.RecursoNoEncontradoException;
 import com.example.hostadmin.exceptions.ValidacionException;
 import com.example.hostadmin.model.Habitacion;
-import com.example.hostadmin.model.Huesped;
 import com.example.hostadmin.model.Reserva;
 import com.example.hostadmin.repository.HabitacionRepository;
-import com.example.hostadmin.repository.HuespedRepository;
 import com.example.hostadmin.repository.ReservaRepository;
+import com.huesped.huespedes.model.Huesped;
+import com.huesped.huespedes.repository.HuespedRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

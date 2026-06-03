@@ -9,11 +9,11 @@ import com.example.hostadmin.DTO.ResenniaDTO;
 import com.example.hostadmin.exceptions.RecursoNoEncontradoException;
 import com.example.hostadmin.exceptions.ValidacionException;
 import com.example.hostadmin.model.Hostal;
-import com.example.hostadmin.model.Huesped;
 import com.example.hostadmin.model.Resena;
 import com.example.hostadmin.repository.HostalRepository;
-import com.example.hostadmin.repository.HuespedRepository;
 import com.example.hostadmin.repository.ResenaRepository;
+import com.huesped.huespedes.model.Huesped;
+import com.huesped.huespedes.repository.HuespedRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

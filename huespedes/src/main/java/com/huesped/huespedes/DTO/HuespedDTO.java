@@ -1,4 +1,4 @@
-package com.example.hostadmin.DTO;
+package com.huesped.huespedes.DTO;
 
 import lombok.Data;
 

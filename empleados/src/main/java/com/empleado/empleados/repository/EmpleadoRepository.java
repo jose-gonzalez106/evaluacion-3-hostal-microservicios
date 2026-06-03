@@ -1,8 +1,8 @@
-package com.example.hostadmin.repository;
+package com.empleado.empleados.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.hostadmin.model.Empleado;
+import com.empleado.empleados.model.Empleado;
 // id es rut, por eso es String
 public interface EmpleadoRepository extends JpaRepository<Empleado, String> {
 
