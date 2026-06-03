@@ -17,7 +17,7 @@ import com.example.hostadmin.model.Huesped;
 import com.example.hostadmin.service.HuespedService;
 import jakarta.validation.Valid;
 
-
+@Controller
 @RestController
 @RequestMapping("/api/v1/huespedes")
 public class HuespedController {
