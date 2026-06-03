@@ -18,6 +18,7 @@ import com.example.hostadmin.model.Hostal;
 import com.example.hostadmin.service.HostalService;
 import jakarta.validation.Valid;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/hostales")
 public class HostalController {
