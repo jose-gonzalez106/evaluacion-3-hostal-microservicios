@@ -16,6 +16,7 @@ import com.example.hostadmin.model.Resena;
 import com.example.hostadmin.service.ResenaService;
 import jakarta.validation.Valid;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/resenas")
 public class ResenaController {
