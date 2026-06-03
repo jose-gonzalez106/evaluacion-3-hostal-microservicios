@@ -1,4 +1,4 @@
-package com.example.hostadmin.DTO;
+package com.empleado.empleados.DTO;
 
 import lombok.Data;
 

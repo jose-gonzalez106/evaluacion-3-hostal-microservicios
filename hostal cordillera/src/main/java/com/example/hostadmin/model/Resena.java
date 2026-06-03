@@ -9,6 +9,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.huesped.huespedes.model.Huesped;
 
 @Entity
 @Table(name = "resenas")

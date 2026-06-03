@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import java.util.List;
 
+import com.empleado.empleados.model.Empleado;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

@@ -1,4 +1,4 @@
-package com.example.hostadmin.controller;
+package com.empleado.empleados.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
