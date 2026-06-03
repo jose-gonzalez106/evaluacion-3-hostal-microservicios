@@ -18,6 +18,7 @@ import com.example.hostadmin.model.Comuna;
 import com.example.hostadmin.service.ComunaService;
 import jakarta.validation.Valid;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/comunas")
 public class ComunaController {
