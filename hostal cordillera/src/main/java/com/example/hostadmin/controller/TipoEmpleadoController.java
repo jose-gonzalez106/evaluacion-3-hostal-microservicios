@@ -16,6 +16,7 @@ import com.example.hostadmin.model.TipoEmpleado;
 import com.example.hostadmin.service.TipoEmpleadoService;
 import jakarta.validation.Valid;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/tipos-empleado")
 public class TipoEmpleadoController {
