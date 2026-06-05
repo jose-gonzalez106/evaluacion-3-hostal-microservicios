@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import com.example.hostadmin.DTO.RegionDTO;
 import com.example.hostadmin.model.Region;
 import com.example.hostadmin.service.RegionService;
+import org.springframework.stereotype.Controller;
 import jakarta.validation.Valid;
 
 @Controller
