@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import com.example.hostadmin.DTO.ReservaDTO;
 import com.example.hostadmin.model.Reserva;
 import com.example.hostadmin.service.ReservaService;
+import org.springframework.stereotype.Controller;
 import jakarta.validation.Valid;
 
 @Controller
