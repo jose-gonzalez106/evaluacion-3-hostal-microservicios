@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import com.example.hostadmin.DTO.HuespedDTO;
 import com.example.hostadmin.model.Huesped;
 import com.example.hostadmin.service.HuespedService;
+import org.springframework.stereotype.Controller;
 import jakarta.validation.Valid;
 
 @Controller
