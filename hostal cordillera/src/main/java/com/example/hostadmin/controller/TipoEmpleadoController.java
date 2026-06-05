@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hostadmin.DTO.TipoEmpleadoDTO;
 import com.example.hostadmin.model.TipoEmpleado;
 import com.example.hostadmin.service.TipoEmpleadoService;
+import org.springframework.stereotype.Controller;
 import jakarta.validation.Valid;
 
 @Controller
