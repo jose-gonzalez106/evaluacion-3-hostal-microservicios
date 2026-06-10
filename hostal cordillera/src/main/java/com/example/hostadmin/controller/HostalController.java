@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 import com.example.hostadmin.DTO.HostalDTO;
 import com.example.hostadmin.model.Hostal;
 import com.example.hostadmin.service.HostalService;
 import jakarta.validation.Valid;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/hostales")
 public class HostalController {

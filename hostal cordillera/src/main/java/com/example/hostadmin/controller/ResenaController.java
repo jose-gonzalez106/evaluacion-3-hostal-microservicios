@@ -14,8 +14,10 @@ import org.springframework.http.ResponseEntity;
 import com.example.hostadmin.DTO.ResenniaDTO;
 import com.example.hostadmin.model.Resena;
 import com.example.hostadmin.service.ResenaService;
+import org.springframework.stereotype.Controller;
 import jakarta.validation.Valid;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/resenas")
 public class ResenaController {
