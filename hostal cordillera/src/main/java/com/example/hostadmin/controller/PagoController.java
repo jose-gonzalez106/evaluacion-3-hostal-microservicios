@@ -15,7 +15,9 @@ import com.example.hostadmin.DTO.PagoDTO;
 import com.example.hostadmin.model.Pago;
 import com.example.hostadmin.service.PagoService;
 import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
 
+@Controller
 @RestController
 @RequestMapping("/api/v1/pagos")
 public class PagoController {
