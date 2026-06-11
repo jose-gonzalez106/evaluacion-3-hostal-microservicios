@@ -1,24 +1,18 @@
 package com.huesped.huespedes.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.example.hostadmin.DTO.HuespedDTO;
-import com.example.hostadmin.model.Huesped;
-import com.example.hostadmin.service.HuespedService;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import com.huesped.huespedes.DTO.HuespedDTO;
+import com.huesped.huespedes.model.Huesped;
+import com.huesped.huespedes.service.HuespedService;
+
 import jakarta.validation.Valid;
 
-@Controller
 @RestController
 @RequestMapping("/api/v1/huespedes")
 public class HuespedController {
@@ -28,33 +22,47 @@ public class HuespedController {
 
     @GetMapping
     public ResponseEntity<?> obtenerTodos() {
+
         List<HuespedDTO> huespedes = huespedService.obtenerTodos();
-        if (!huespedes.isEmpty()) {
-            return new ResponseEntity<>(huespedes, HttpStatus.OK);
+
+        if (huespedes.isEmpty()) {
+            return ResponseEntity.noContent().build();
         }
-        return new ResponseEntity<>("No hay huespedes", HttpStatus.NO_CONTENT);
+
+        return ResponseEntity.ok(huespedes);
     }
 
     @GetMapping("/{run}")
-    public ResponseEntity<?> obtenerPorRun(@PathVariable String run) {
-        HuespedDTO huesped = huespedService.buscarPorRun(run);
-        return new ResponseEntity<>(huesped, HttpStatus.OK);
+    public ResponseEntity<HuespedDTO> obtenerPorRun(
+            @PathVariable String run) {
+
+        return ResponseEntity.ok(
+                huespedService.buscarPorRun(run));
     }
 
-    @PostMapping("/comuna/{comunaId}")
-    public ResponseEntity<?> crear(@PathVariable Long comunaId,
-                                    @Valid @RequestBody Huesped huesped) {
-        return new ResponseEntity<>(huespedService.guardar(comunaId, huesped), HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<Huesped> crear(
+            @Valid @RequestBody Huesped huesped) {
+
+        return new ResponseEntity<>(
+                huespedService.guardar(huesped),
+                HttpStatus.CREATED);
     }
 
     @PutMapping("/{run}")
-    public ResponseEntity<?> actualizar(@PathVariable String run,
-                                        @Valid @RequestBody Huesped huesped) {
-        return new ResponseEntity<>(huespedService.actualizar(run, huesped), HttpStatus.OK);
+    public ResponseEntity<Huesped> actualizar(
+            @PathVariable String run,
+            @Valid @RequestBody Huesped huesped) {
+
+        return ResponseEntity.ok(
+                huespedService.actualizar(run, huesped));
     }
 
     @DeleteMapping("/{run}")
-    public ResponseEntity<?> eliminar(@PathVariable String run) {
-        return new ResponseEntity<>(huespedService.eliminar(run), HttpStatus.OK);
+    public ResponseEntity<String> eliminar(
+            @PathVariable String run) {
+
+        return ResponseEntity.ok(
+                huespedService.eliminar(run));
     }
 }
