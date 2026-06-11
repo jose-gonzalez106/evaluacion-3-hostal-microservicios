@@ -1,13 +1,9 @@
 package com.huesped.huespedes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
-import java.util.List;
 
 @Entity
 @Table(name = "huespedes")
@@ -40,16 +36,7 @@ public class Huesped {
     @Column(nullable = false, length = 100, unique = true)
     private String correo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comuna_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "region"})
-    private Comuna comuna;
+    @Column(name = "comuna_id")
+    private Long comunaId;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "huesped", fetch = FetchType.LAZY)
-    private List<Reserva> reservas;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "huesped", fetch = FetchType.LAZY)
-    private List<Resena> resenas;
 }

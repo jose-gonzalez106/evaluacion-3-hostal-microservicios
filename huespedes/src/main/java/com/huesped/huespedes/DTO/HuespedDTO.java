@@ -10,4 +10,6 @@ public class HuespedDTO {
     private String apellido;
     private String telefono;
     private String correo;
+    private Long comunaId;
+
 }
