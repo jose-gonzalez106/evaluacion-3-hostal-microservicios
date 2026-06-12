@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+
+            - id: huespedes-service
+              uri: lb://huespedes
+              predicates:
+                - Path=/api/v1/huespedes/**, /huespedes/api-docs/**
+
+            - id: empleados-service
+              uri: lb://empleados
+              predicates:
+                - Path=/api/v1/empleados/**, /empleados/api-docs/**
+
+            - id: hostal-service
+              uri: lb://hostal
+              predicates:
+                - Path=/api/v1/hostal/**, /hostal/api-docs/**
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    urls:
+      - name: Microservicio Huespedes
+        url: /huespedes/api-docs
+
+      - name: Microservicio Empleados
+        url: /empleados/api-docs
+
+      - name: Microservicio Hostal Cordillera
+        url: /hostal/api-docs
+
+  api-docs:
+    enabled: true
