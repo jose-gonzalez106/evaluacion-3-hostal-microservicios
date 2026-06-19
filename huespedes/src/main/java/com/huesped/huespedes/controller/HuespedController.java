@@ -5,12 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.huesped.huespedes.DTO.HuespedDTO;
 import com.huesped.huespedes.model.Huesped;
 import com.huesped.huespedes.service.HuespedService;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
@@ -21,7 +28,7 @@ public class HuespedController {
     private HuespedService huespedService;
 
     @GetMapping
-    public ResponseEntity<?> obtenerTodos() {
+    public ResponseEntity<List<HuespedDTO>> obtenerTodos() {
 
         List<HuespedDTO> huespedes = huespedService.obtenerTodos();
 
@@ -41,16 +48,15 @@ public class HuespedController {
     }
 
     @PostMapping
-    public ResponseEntity<Huesped> crear(
+    public ResponseEntity<HuespedDTO> crear(
             @Valid @RequestBody Huesped huesped) {
 
-        return new ResponseEntity<>(
-                huespedService.guardar(huesped),
-                HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(huespedService.guardar(huesped));
     }
 
     @PutMapping("/{run}")
-    public ResponseEntity<Huesped> actualizar(
+    public ResponseEntity<HuespedDTO> actualizar(
             @PathVariable String run,
             @Valid @RequestBody Huesped huesped) {
 
