@@ -1,6 +1,14 @@
 package com.example.hostadmin.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +17,6 @@ import lombok.Data;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.huesped.huespedes.model.Huesped;
 
 @Entity
 @Table(name = "resenas")
@@ -33,10 +40,8 @@ public class Resena {
     @Column(nullable = false)
     private LocalDate fecha;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "huesped_run", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "reservas", "resenas", "comuna"})
-    private Huesped huesped;
+    @Column(name = "huesped_run", nullable = false)
+    private String huespedRun;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hostal_id", nullable = false)

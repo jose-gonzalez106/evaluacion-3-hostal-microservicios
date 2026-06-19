@@ -22,6 +22,8 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- Versión de Spring Cloud compatible con Spring Boot 3.5.x -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -64,19 +66,46 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-         <dependency>
-           <groupId>org.springdoc</groupId>
-           <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-           <version>2.6.0</version>
-       </dependency>
-         <dependency>
-           <groupId>net.datafaker</groupId>
-           <artifactId>datafaker</artifactId>
-           <version>2.4.0</version>
-           <scope>test</scope>
-       </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- WebFlux: necesario para usar WebClient y llamar a otros microservicios -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!-- Eureka Client: para registrarse en el servidor de descubrimiento -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
 
     </dependencies>
+
+    <!-- Gestión de versiones de Spring Cloud -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
