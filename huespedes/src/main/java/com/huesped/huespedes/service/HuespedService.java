@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.huesped.huespedes.DTO.HuespedDTO;
+import com.huesped.huespedes.exception.RecursoDuplicadoException;
 import com.huesped.huespedes.exception.RecursoNoEncontradoException;
 import com.huesped.huespedes.model.Huesped;
 import com.huesped.huespedes.repository.HuespedRepository;
@@ -22,7 +23,8 @@ public class HuespedService {
     private HuespedRepository huespedRepository;
 
     public List<HuespedDTO> obtenerTodos() {
-        log.info("[HuespedService] Obteniendo todos los huespedes");
+
+        log.info("[HuespedService] Obteniendo todos los huéspedes");
 
         return huespedRepository.findAll()
                 .stream()
@@ -32,79 +34,77 @@ public class HuespedService {
 
     public HuespedDTO buscarPorRun(String run) {
 
-        log.info("[HuespedService] Buscando huesped con run: {}", run);
+        log.info("[HuespedService] Buscando huésped {}", run);
 
-        Huesped huesped = huespedRepository.findById(run)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "Huesped con RUN " + run + " no encontrado"));
-
-        return convertirADTO(huesped);
+        return convertirADTO(obtenerEntidad(run));
     }
 
-    public Huesped guardar(Huesped huesped) {
+    public HuespedDTO guardar(Huesped huesped) {
 
         if (huespedRepository.existsById(huesped.getRun())) {
-            throw new RuntimeException(
-                    "Ya existe un huesped con run: " + huesped.getRun());
+            throw new RecursoDuplicadoException(
+                    "Ya existe un huésped con RUN: " + huesped.getRun());
         }
 
         if (huespedRepository.existsByCorreo(huesped.getCorreo())) {
-            throw new RuntimeException(
-                    "Ya existe un huesped con correo: " + huesped.getCorreo());
+            throw new RecursoDuplicadoException(
+                    "Ya existe un huésped con correo: " + huesped.getCorreo());
         }
 
-        return huespedRepository.save(huesped);
+        Huesped guardado = huespedRepository.save(huesped);
+
+        return convertirADTO(guardado);
     }
 
-    public Huesped actualizar(String run, Huesped huesped) {
+    public HuespedDTO actualizar(String run, Huesped huesped) {
 
-        Huesped existente = huespedRepository.findById(run)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "Huesped con RUN " + run + " no encontrado"));
+        Huesped existente = obtenerEntidad(run);
 
-        if (huesped.getNombre() != null) {
+        if (huesped.getNombre() != null)
             existente.setNombre(huesped.getNombre());
-        }
 
-        if (huesped.getApellido() != null) {
+        if (huesped.getApellido() != null)
             existente.setApellido(huesped.getApellido());
-        }
 
-        if (huesped.getTelefono() != null) {
+        if (huesped.getTelefono() != null)
             existente.setTelefono(huesped.getTelefono());
-        }
 
         if (huesped.getCorreo() != null) {
 
             if (!huesped.getCorreo().equals(existente.getCorreo())
                     && huespedRepository.existsByCorreo(huesped.getCorreo())) {
 
-                throw new RuntimeException(
-                        "Ya existe un huesped con correo: "
+                throw new RecursoDuplicadoException(
+                        "Ya existe un huésped con correo: "
                                 + huesped.getCorreo());
             }
 
             existente.setCorreo(huesped.getCorreo());
         }
 
-        if (huesped.getComunaId() != null) {
+        if (huesped.getComunaId() != null)
             existente.setComunaId(huesped.getComunaId());
-        }
 
-        return huespedRepository.save(existente);
+        Huesped actualizado = huespedRepository.save(existente);
+
+        return convertirADTO(actualizado);
     }
 
     public String eliminar(String run) {
 
-        Huesped huesped = huespedRepository.findById(run)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "Huesped con RUN " + run + " no encontrado"));
+        Huesped huesped = obtenerEntidad(run);
 
         huespedRepository.delete(huesped);
 
-        return "Huesped "
-                + huesped.getNombre()
-                + " eliminado del registro";
+        return "Huésped eliminado correctamente";
+    }
+
+    private Huesped obtenerEntidad(String run) {
+
+        return huespedRepository.findById(run)
+                .orElseThrow(() ->
+                        new RecursoNoEncontradoException(
+                                "Huésped con RUN " + run + " no encontrado"));
     }
 
     private HuespedDTO convertirADTO(Huesped huesped) {

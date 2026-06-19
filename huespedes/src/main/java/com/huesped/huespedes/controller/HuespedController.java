@@ -21,7 +21,7 @@ public class HuespedController {
     private HuespedService huespedService;
 
     @GetMapping
-    public ResponseEntity<?> obtenerTodos() {
+    public ResponseEntity<List<HuespedDTO>> obtenerTodos() {
 
         List<HuespedDTO> huespedes = huespedService.obtenerTodos();
 
@@ -41,16 +41,15 @@ public class HuespedController {
     }
 
     @PostMapping
-    public ResponseEntity<Huesped> crear(
+    public ResponseEntity<HuespedDTO> crear(
             @Valid @RequestBody Huesped huesped) {
 
-        return new ResponseEntity<>(
-                huespedService.guardar(huesped),
-                HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(huespedService.guardar(huesped));
     }
 
     @PutMapping("/{run}")
-    public ResponseEntity<Huesped> actualizar(
+    public ResponseEntity<HuespedDTO> actualizar(
             @PathVariable String run,
             @Valid @RequestBody Huesped huesped) {
 
