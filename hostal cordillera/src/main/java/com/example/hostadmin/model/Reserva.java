@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.huesped.huespedes.model.Huesped;
 
 @Entity
 @Table(name = "reservas")
@@ -47,10 +46,8 @@ public class Reserva {
     @Column(nullable = false, length = 10)
     private String estado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "huesped_run", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "reservas", "resenas", "comuna"})
-    private Huesped huesped;
+    @Column(name = "huesped_run", nullable = false)
+    private String huespedRun;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habitacion_id", nullable = false)
