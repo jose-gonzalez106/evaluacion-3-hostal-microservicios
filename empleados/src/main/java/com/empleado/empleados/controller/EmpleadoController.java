@@ -1,6 +1,7 @@
 package com.empleado.empleados.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.stereotype.Controller;
 
-import com.example.hostadmin.DTO.EmpleadoDTO;
-import com.example.hostadmin.model.Empleado;
-import com.example.hostadmin.service.EmpleadoService;
+import com.empleado.empleados.DTO.EmpleadoDTO;
+import com.empleado.empleados.model.Empleado;
+import com.empleado.empleados.service.EmpleadoService;
+
 import jakarta.validation.Valid;
 
-@Controller
 @RestController
 @RequestMapping("/api/v1/empleados")
 public class EmpleadoController {
@@ -28,35 +28,48 @@ public class EmpleadoController {
     private EmpleadoService empleadoService;
 
     @GetMapping
-    public ResponseEntity<?> obtenerTodos() {
-        List<EmpleadoDTO> empleados = empleadoService.obtenerTodos();
-        if (!empleados.isEmpty()) {
-            return new ResponseEntity<>(empleados, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("No hay empleados", HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<EmpleadoDTO>> obtenerTodos() {
+        List<EmpleadoDTO> lista = empleadoService.obtenerTodos();
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/{rut}")
     public ResponseEntity<?> obtenerPorRut(@PathVariable String rut) {
-        EmpleadoDTO empleado = empleadoService.buscarPorRut(rut);
-        return new ResponseEntity<>(empleado, HttpStatus.OK);
+        try {
+            EmpleadoDTO dto = empleadoService.buscarPorRut(rut);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/hostal/{hostalId}/tipo/{tipoId}")
-    public ResponseEntity<?> crear(@PathVariable Long hostalId,
-                                    @PathVariable Long tipoId,
-                                    @Valid @RequestBody Empleado empleado) {
-        return new ResponseEntity<>(empleadoService.guardar(hostalId, tipoId, empleado), HttpStatus.CREATED);
+    public ResponseEntity<?> crear(@PathVariable Long hostalId, @PathVariable Long tipoId, @Valid @RequestBody Empleado empleado) {
+        try {
+            Empleado guardado = empleadoService.guardar(hostalId, tipoId, empleado);
+            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{rut}")
-    public ResponseEntity<?> actualizar(@PathVariable String rut,
-                                        @Valid @RequestBody Empleado empleado) {
-        return new ResponseEntity<>(empleadoService.actualizar(rut, empleado), HttpStatus.OK);
+    public ResponseEntity<?> actualizar(@PathVariable String rut, @Valid @RequestBody Empleado empleado) {
+        try {
+            Empleado actualizado = empleadoService.actualizar(rut, empleado);
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{rut}")
     public ResponseEntity<?> eliminar(@PathVariable String rut) {
-        return new ResponseEntity<>(empleadoService.eliminar(rut), HttpStatus.OK);
+        try {
+            String resultado = empleadoService.eliminar(rut);
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
