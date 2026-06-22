@@ -1,6 +1,7 @@
 package com.example.hostadmin.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.stereotype.Controller;
 
 import com.example.hostadmin.DTO.HabitacionDTO;
 import com.example.hostadmin.model.Habitacion;
 import com.example.hostadmin.service.HabitacionService;
+
 import jakarta.validation.Valid;
 
-@Controller
 @RestController
 @RequestMapping("/api/v1/habitaciones")
 public class HabitacionController {
@@ -29,40 +29,58 @@ public class HabitacionController {
     private HabitacionService habitacionService;
 
     @GetMapping
-    public ResponseEntity<?> obtenerTodas() {
-        List<HabitacionDTO> habitaciones = habitacionService.obtenerTodas();
-        if (!habitaciones.isEmpty()) {
-            return new ResponseEntity<>(habitaciones, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("No hay habitaciones", HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<HabitacionDTO>> obtenerTodas() {
+        List<HabitacionDTO> lista = habitacionService.obtenerTodas();
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/{numero}")
     public ResponseEntity<?> obtenerPorNumero(@PathVariable Integer numero) {
-        HabitacionDTO habitacion = habitacionService.buscarPorNumero(numero);
-        return new ResponseEntity<>(habitacion, HttpStatus.OK);
+        try {
+            HabitacionDTO dto = habitacionService.buscarPorNumero(numero);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/hostal/{hostalId}")
-    public ResponseEntity<?> crear(@PathVariable Long hostalId,
-                                    @Valid @RequestBody Habitacion habitacion) {
-        return new ResponseEntity<>(habitacionService.guardar(hostalId, habitacion), HttpStatus.CREATED);
+    public ResponseEntity<?> crear(@PathVariable Long hostalId, @Valid @RequestBody Habitacion habitacion) {
+        try {
+            Habitacion guardada = habitacionService.guardar(hostalId, habitacion);
+            return new ResponseEntity<>(guardada, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{numero}")
-    public ResponseEntity<?> actualizar(@PathVariable Integer numero,
-                                        @Valid @RequestBody Habitacion habitacion) {
-        return new ResponseEntity<>(habitacionService.actualizar(numero, habitacion), HttpStatus.OK);
+    public ResponseEntity<?> actualizar(@PathVariable Integer numero, @Valid @RequestBody Habitacion habitacion) {
+        try {
+            Habitacion actualizada = habitacionService.actualizar(numero, habitacion);
+            return new ResponseEntity<>(actualizada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PatchMapping("/{numero}/estado")
-    public ResponseEntity<?> cambiarEstado(@PathVariable Integer numero,
-                                        @Valid @RequestBody HabitacionDTO dto) {
-        return new ResponseEntity<>(habitacionService.cambiarEstado(numero, dto.getEstado()), HttpStatus.OK);
+    public ResponseEntity<?> cambiarEstado(@PathVariable Integer numero, @Valid @RequestBody HabitacionDTO dto) {
+        try {
+            Habitacion actualizada = habitacionService.cambiarEstado(numero, dto.getEstado());
+            return new ResponseEntity<>(actualizada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{numero}")
     public ResponseEntity<?> eliminar(@PathVariable Integer numero) {
-        return new ResponseEntity<>(habitacionService.eliminar(numero), HttpStatus.OK);
+        try {
+            String resultado = habitacionService.eliminar(numero);
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
