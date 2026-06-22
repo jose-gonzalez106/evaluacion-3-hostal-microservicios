@@ -26,8 +26,8 @@ import com.huesped.huespedes.model.Comuna;
 import com.huesped.huespedes.model.Huesped;
 import com.huesped.huespedes.repository.ComunaRepository;
 import com.huesped.huespedes.repository.HuespedRepository;
+import com.github.javafaker.Faker;
 
-import net.datafaker.Faker;
 
 @ExtendWith(MockitoExtension.class)
 public class HuespedServiceTest {
