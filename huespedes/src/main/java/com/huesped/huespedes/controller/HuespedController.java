@@ -29,46 +29,47 @@ public class HuespedController {
 
     @GetMapping
     public ResponseEntity<List<HuespedDTO>> obtenerTodos() {
-
-        List<HuespedDTO> huespedes = huespedService.obtenerTodos();
-
-        if (huespedes.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(huespedes);
+        List<HuespedDTO> lista = huespedService.obtenerTodos();
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/{run}")
-    public ResponseEntity<HuespedDTO> obtenerPorRun(
-            @PathVariable String run) {
-
-        return ResponseEntity.ok(
-                huespedService.buscarPorRun(run));
+    public ResponseEntity<?> obtenerPorRun(@PathVariable String run) {
+        try {
+            HuespedDTO dto = huespedService.buscarPorRun(run);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
-    @PostMapping
-    public ResponseEntity<HuespedDTO> crear(
-            @Valid @RequestBody Huesped huesped) {
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(huespedService.guardar(huesped));
+    @PostMapping("/comuna/{comunaId}")
+    public ResponseEntity<?> crear(@PathVariable Long comunaId, @Valid @RequestBody Huesped huesped) {
+        try {
+            Huesped guardado = huespedService.guardar(comunaId, huesped);
+            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{run}")
-    public ResponseEntity<HuespedDTO> actualizar(
-            @PathVariable String run,
-            @Valid @RequestBody Huesped huesped) {
-
-        return ResponseEntity.ok(
-                huespedService.actualizar(run, huesped));
+    public ResponseEntity<?> actualizar(@PathVariable String run, @Valid @RequestBody Huesped huesped) {
+        try {
+            Huesped actualizado = huespedService.actualizar(run, huesped);
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{run}")
-    public ResponseEntity<String> eliminar(
-            @PathVariable String run) {
-
-        return ResponseEntity.ok(
-                huespedService.eliminar(run));
+    public ResponseEntity<?> eliminar(@PathVariable String run) {
+        try {
+            String resultado = huespedService.eliminar(run);
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
