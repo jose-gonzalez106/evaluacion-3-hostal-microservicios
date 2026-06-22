@@ -19,15 +19,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.github.javafaker.Faker;
 import com.huesped.huespedes.DTO.HuespedDTO;
-import com.huesped.huespedes.exceptions.RecursoNoEncontradoException;
-import com.huesped.huespedes.exceptions.ValidacionException;
-import com.huesped.huespedes.model.Comuna;
+import com.huesped.huespedes.exception.RecursoNoEncontradoException;
 import com.huesped.huespedes.model.Huesped;
-import com.huesped.huespedes.repository.ComunaRepository;
 import com.huesped.huespedes.repository.HuespedRepository;
 
-import net.datafaker.Faker;
+
 
 @ExtendWith(MockitoExtension.class)
 public class HuespedServiceTest {
