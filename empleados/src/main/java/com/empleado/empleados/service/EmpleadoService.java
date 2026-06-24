@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empleado.empleados.DTO.EmpleadoDTO;
+import com.empleado.empleados.exceptions.RecursoNoEncontradoException;
+import com.empleado.empleados.exceptions.ValidacionException;
 import com.empleado.empleados.model.Empleado;
+import com.empleado.empleados.model.Hostal;
+import com.empleado.empleados.model.TipoEmpleado;
 import com.empleado.empleados.repository.EmpleadoRepository;
-import com.example.hostadmin.exceptions.RecursoNoEncontradoException;
-import com.example.hostadmin.exceptions.ValidacionException;
-import com.example.hostadmin.model.Hostal;
-import com.example.hostadmin.model.TipoEmpleado;
-import com.example.hostadmin.repository.HostalRepository;
-import com.example.hostadmin.repository.TipoEmpleadoRepository;
+import com.empleado.empleados.repository.HostalRepository;
+import com.empleado.empleados.repository.TipoEmpleadoRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class EmpleadoService {
+
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
@@ -31,21 +32,20 @@ public class EmpleadoService {
     @Autowired
     private TipoEmpleadoRepository tipoEmpleadoRepository;
 
-
     public List<EmpleadoDTO> obtenerTodos() {
         log.info("[EmpleadoService] Obteniendo todos los empleados");
         return empleadoRepository.findAll().stream()
-        .map(this::convertirADTO)
-        .toList();
+                .map(this::convertirADTO)
+                .toList();
     }
 
     public EmpleadoDTO buscarPorRut(String rut) {
         log.info("[EmpleadoService] Buscando empleado con rut: {}", rut);
         Empleado empleado = empleadoRepository.findById(rut)
-        .orElseThrow(() -> {
-            log.warn("[EmpleadoService] Empleado {} no encontrado", rut);
-            return new RecursoNoEncontradoException("empleado " + rut + " no encontrado");
-        });
+                .orElseThrow(() -> {
+                    log.warn("[EmpleadoService] Empleado {} no encontrado", rut);
+                    return new RecursoNoEncontradoException("empleado " + rut + " no encontrado");
+                });
         return convertirADTO(empleado);
     }
 
@@ -56,15 +56,15 @@ public class EmpleadoService {
             throw new ValidacionException("ya existe el empleado " + empleado.getRut());
         }
         Hostal hostal = hostalRepository.findById(hostalId)
-        .orElseThrow(() -> {
-            log.warn("[EmpleadoService] Hostal {} no encontrado", hostalId);
-            return new RecursoNoEncontradoException("el hostal " + hostalId + " no existe");
-        });
+                .orElseThrow(() -> {
+                    log.warn("[EmpleadoService] Hostal {} no encontrado", hostalId);
+                    return new RecursoNoEncontradoException("el hostal " + hostalId + " no existe");
+                });
         TipoEmpleado tipo = tipoEmpleadoRepository.findById(tipoId)
-        .orElseThrow(() -> {
-            log.warn("[EmpleadoService] TipoEmpleado {} no encontrado", tipoId);
-            return new RecursoNoEncontradoException("id tipo " + tipoId + " no existe");
-        });
+                .orElseThrow(() -> {
+                    log.warn("[EmpleadoService] TipoEmpleado {} no encontrado", tipoId);
+                    return new RecursoNoEncontradoException("id tipo " + tipoId + " no existe");
+                });
         empleado.setHostal(hostal);
         empleado.setTipoEmpleado(tipo);
         Empleado guardado = empleadoRepository.save(empleado);
@@ -75,10 +75,10 @@ public class EmpleadoService {
     public Empleado actualizar(String rut, Empleado empleado) {
         log.info("[EmpleadoService] Actualizando empleado con rut: {}", rut);
         Empleado existente = empleadoRepository.findById(rut)
-        .orElseThrow(() -> {
-            log.warn("[EmpleadoService] Empleado {} no encontrado para actualizar", rut);
-            return new RecursoNoEncontradoException("empleado " + rut + " no encontrado");
-        });
+                .orElseThrow(() -> {
+                    log.warn("[EmpleadoService] Empleado {} no encontrado para actualizar", rut);
+                    return new RecursoNoEncontradoException("empleado " + rut + " no encontrado");
+                });
         if (empleado.getNombre() != null) {
             existente.setNombre(empleado.getNombre());
         }
@@ -95,13 +95,13 @@ public class EmpleadoService {
     public String eliminar(String rut) {
         log.info("[EmpleadoService] Eliminando empleado con rut: {}", rut);
         Empleado empleado = empleadoRepository.findById(rut)
-        .orElseThrow(() -> {
-            log.warn("[EmpleadoService] Empleado {} no encontrado para eliminar", rut);
-            return new RecursoNoEncontradoException("empleado " + rut + " no encontrado");
-        });
+                .orElseThrow(() -> {
+                    log.warn("[EmpleadoService] Empleado {} no encontrado para eliminar", rut);
+                    return new RecursoNoEncontradoException("empleado " + rut + " no encontrado");
+                });
         empleadoRepository.delete(empleado);
         log.info("[EmpleadoService] Empleado {} eliminado", rut);
-        return "empleado " + empleado.getNombre() + " eliminado ";
+        return "empleado " + empleado.getNombre() + " eliminado";
     }
 
     private EmpleadoDTO convertirADTO(Empleado empleado) {
@@ -113,9 +113,8 @@ public class EmpleadoService {
         if (empleado.getTipoEmpleado() != null) {
             dto.setTipoEmpleado(empleado.getTipoEmpleado().getCategoria());
         } else {
-            dto.setTipoEmpleado(" tipo no asignado ");
+            dto.setTipoEmpleado("tipo no asignado");
         }
         return dto;
     }
-
 }
