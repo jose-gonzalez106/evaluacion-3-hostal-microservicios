@@ -46,10 +46,8 @@ public class Reserva {
     @Column(nullable = false, length = 10)
     private String estado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "huesped_run", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "reservas", "resenas", "comuna"})
-    private Huesped huesped;
+    @Column(name = "huesped_run", nullable = false)
+    private String huespedRun;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habitacion_id", nullable = false)
