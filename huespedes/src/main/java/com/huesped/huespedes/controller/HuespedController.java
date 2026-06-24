@@ -43,10 +43,10 @@ public class HuespedController {
         }
     }
 
-    @PostMapping("/comuna/{comunaId}")
-    public ResponseEntity<?> crear(@PathVariable Long comunaId, @Valid @RequestBody Huesped huesped) {
+    @PostMapping
+    public ResponseEntity<?> crear(@Valid @RequestBody Huesped huesped) {
         try {
-            Huesped guardado = huespedService.guardar(comunaId, huesped);
+            HuespedDTO guardado = huespedService.guardar(huesped);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
