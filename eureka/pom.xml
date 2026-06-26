@@ -58,6 +58,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Clase principal de Eureka Server -->
+                    <mainClass>com.jedis.eureka.EurekaApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
