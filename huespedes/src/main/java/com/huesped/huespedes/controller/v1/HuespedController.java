@@ -43,10 +43,10 @@ public class HuespedController {
         }
     }
 
-    @PostMapping("/comuna/{comunaId}")
-    public ResponseEntity<?> crear(@PathVariable Long comunaId, @Valid @RequestBody Huesped huesped) {
+    @PostMapping
+    public ResponseEntity<?> crear(@Valid @RequestBody Huesped huesped) {
         try {
-            Huesped guardado = huespedService.guardar(comunaId, huesped);
+            HuespedDTO guardado = huespedService.guardar(huesped);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -56,7 +56,7 @@ public class HuespedController {
     @PutMapping("/{run}")
     public ResponseEntity<?> actualizar(@PathVariable String run, @Valid @RequestBody Huesped huesped) {
         try {
-            Huesped actualizado = huespedService.actualizar(run, huesped);
+            HuespedDTO actualizado = huespedService.actualizar(run, huesped);
             return new ResponseEntity<>(actualizado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

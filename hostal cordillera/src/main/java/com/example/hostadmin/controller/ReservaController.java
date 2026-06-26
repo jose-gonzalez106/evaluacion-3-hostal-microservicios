@@ -1,24 +1,25 @@
 package com.example.hostadmin.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import com.example.hostadmin.DTO.ReservaDTO;
 import com.example.hostadmin.model.Reserva;
 import com.example.hostadmin.service.ReservaService;
-import org.springframework.stereotype.Controller;
+
 import jakarta.validation.Valid;
 
-@Controller
 @RestController
 @RequestMapping("/api/v1/reservas")
 public class ReservaController {
@@ -27,43 +28,46 @@ public class ReservaController {
     private ReservaService reservaService;
 
     @GetMapping
-    public ResponseEntity<?> obtenerTodas() {
-        List<ReservaDTO> reservas = reservaService.obtenerTodas();
-        if (!reservas.isEmpty()) {
-            return new ResponseEntity<>(reservas, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("No hay reservas", HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<ReservaDTO>> obtenerTodas() {
+        return new ResponseEntity<>(reservaService.obtenerTodas(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
-        ReservaDTO reserva = reservaService.buscarPorId(id);
-        return new ResponseEntity<>(reserva, HttpStatus.OK);
-    }
-
-    @GetMapping("/huesped/{run}")
-    public ResponseEntity<?> obtenerPorHuesped(@PathVariable String run) {
-        List<ReservaDTO> reservas = reservaService.buscarPorHuesped(run);
-        if (!reservas.isEmpty()) {
-            return new ResponseEntity<>(reservas, HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(reservaService.buscarPorId(id), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("No hay reservas para este huesped", HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/huesped/{run}/habitacion/{numero}")
-    public ResponseEntity<?> crear(@PathVariable String run,
-                                    @PathVariable Integer numero,
-                                    @Valid @RequestBody Reserva reserva) {
-        return new ResponseEntity<>(reservaService.crear(run, numero, reserva), HttpStatus.CREATED);
+    @PostMapping("/habitacion/{habitacionNumero}/huesped/{runHuesped}")
+    public ResponseEntity<?> crear(@PathVariable Integer habitacionNumero,
+            @PathVariable String runHuesped,
+            @Valid @RequestBody Reserva reserva) {
+        try {
+            return new ResponseEntity<>(reservaService.crear(runHuesped, habitacionNumero, reserva),
+                    HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PatchMapping("/{id}/cancelar")
+    @PutMapping("/{id}/cancelar")
     public ResponseEntity<?> cancelar(@PathVariable Long id) {
-        return new ResponseEntity<>(reservaService.cancelar(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(reservaService.cancelar(id), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
-        return new ResponseEntity<>(reservaService.eliminar(id), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(reservaService.eliminar(id), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

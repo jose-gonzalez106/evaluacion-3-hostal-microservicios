@@ -11,22 +11,19 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
+
 import com.huesped.huespedes.DTO.HuespedDTO;
+import com.huesped.huespedes.exception.RecursoDuplicadoException;
 import com.huesped.huespedes.exception.RecursoNoEncontradoException;
 import com.huesped.huespedes.model.Huesped;
 import com.huesped.huespedes.repository.HuespedRepository;
-import com.github.javafaker.Faker;
-
-import net.datafaker.Faker;
 
 @ExtendWith(MockitoExtension.class)
 public class HuespedServiceTest {
@@ -34,18 +31,10 @@ public class HuespedServiceTest {
     @Mock
     private HuespedRepository huespedRepository;
 
-    @Mock
-    private ComunaRepository comunaRepository;
-
     @InjectMocks
     private HuespedService huespedService;
 
     private Faker faker = new Faker();
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     private Huesped crearHuesped() {
         Huesped huesped = new Huesped();
@@ -59,85 +48,76 @@ public class HuespedServiceTest {
 
     @Test
     public void testBuscarPorRun_Exitoso() {
-        //given
+        // given
         Huesped huesped = crearHuesped();
         when(huespedRepository.findById("12345678")).thenReturn(Optional.of(huesped));
 
-        //when
+        // when
         HuespedDTO resultado = huespedService.buscarPorRun("12345678");
 
-        //then
-        assertNotNull(resultado, "El DTO no debe ser nulo");
-        assertEquals("12345678", resultado.getRun(), "El RUN debe coincidir");
+        // then
+        assertNotNull(resultado);
+        assertEquals("12345678", resultado.getRun());
         verify(huespedRepository, times(1)).findById("12345678");
     }
 
     @Test
     public void testBuscarPorRun_NoExiste() {
-        //given
+        // given
         when(huespedRepository.findById("00000000")).thenReturn(Optional.empty());
 
-        //when then
+        // when then
         assertThrows(RecursoNoEncontradoException.class,
-                () -> huespedService.buscarPorRun("00000000"),
-                "Debe lanzar excepcion si el huesped no existe");
+                () -> huespedService.buscarPorRun("00000000"));
     }
 
     @Test
     public void testGuardar_Exitoso() {
-        //given
+        // given
         Huesped huesped = crearHuesped();
-        Comuna comuna = new Comuna();
-        comuna.setId(1L);
-        comuna.setNombre("Santiago");
-
         when(huespedRepository.existsById("12345678")).thenReturn(false);
         when(huespedRepository.existsByCorreo(huesped.getCorreo())).thenReturn(false);
-        when(comunaRepository.findById(1L)).thenReturn(Optional.of(comuna));
-        when(huespedRepository.save(any(Huesped.class))).thenAnswer(invocacion -> invocacion.getArgument(0));
+        when(huespedRepository.save(any(Huesped.class))).thenReturn(huesped);
 
-        //when
-        Huesped resultado = huespedService.guardar(1L, huesped);
+        // when
+        HuespedDTO resultado = huespedService.guardar(huesped);
 
-        //then
+        // then
         assertNotNull(resultado);
         assertEquals("12345678", resultado.getRun());
-        assertEquals(comuna, resultado.getComuna());
         verify(huespedRepository, times(1)).save(any(Huesped.class));
     }
 
     @Test
     public void testGuardar_RunDuplicado() {
-        //given
+        // given
         Huesped huesped = crearHuesped();
         when(huespedRepository.existsById("12345678")).thenReturn(true);
 
-        //when then
-        assertThrows(ValidacionException.class,
-                () -> huespedService.guardar(1L, huesped),
-                "Debe lanzar excepcion si el RUN ya existe");
+        // when then
+        assertThrows(RecursoDuplicadoException.class,
+                () -> huespedService.guardar(huesped));
         verify(huespedRepository, never()).save(any());
     }
 
     @Test
     public void testGuardar_CorreoDuplicado() {
-        //given
+        // given
         Huesped huesped = crearHuesped();
         when(huespedRepository.existsById("12345678")).thenReturn(false);
         when(huespedRepository.existsByCorreo(huesped.getCorreo())).thenReturn(true);
 
-        //when then
-        assertThrows(ValidacionException.class,
-                () -> huespedService.guardar(1L, huesped),
-                "Debe lanzar excepcion si el correo ya existe");
+        // when then
+        assertThrows(RecursoDuplicadoException.class,
+                () -> huespedService.guardar(huesped));
     }
 
     @Test
     public void testEliminar_NoExiste() {
-        //gicen
+        // given
         when(huespedRepository.findById("00000000")).thenReturn(Optional.empty());
 
-        //when then
+        // when then
         assertThrows(RecursoNoEncontradoException.class,
                 () -> huespedService.eliminar("00000000"));
     }

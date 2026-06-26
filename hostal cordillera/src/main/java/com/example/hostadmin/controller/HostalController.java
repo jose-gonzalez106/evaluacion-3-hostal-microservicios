@@ -1,6 +1,7 @@
 package com.example.hostadmin.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.stereotype.Controller;
 
 import com.example.hostadmin.DTO.HostalDTO;
 import com.example.hostadmin.model.Hostal;
 import com.example.hostadmin.service.HostalService;
+
 import jakarta.validation.Valid;
 
-@Controller
 @RestController
 @RequestMapping("/api/v1/hostales")
 public class HostalController {
@@ -28,34 +28,48 @@ public class HostalController {
     private HostalService hostalService;
 
     @GetMapping
-    public ResponseEntity<?> obtenerTodos() {
-        List<HostalDTO> hostales = hostalService.obtenerTodos();
-        if (!hostales.isEmpty()) {
-            return new ResponseEntity<>(hostales, HttpStatus.OK);
-        }
-        return new ResponseEntity<>("No hay hostales", HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<HostalDTO>> obtenerTodos() {
+        List<HostalDTO> lista = hostalService.obtenerTodos();
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
-        HostalDTO hostal = hostalService.buscarPorId(id);
-        return new ResponseEntity<>(hostal, HttpStatus.OK);
+        try {
+            HostalDTO dto = hostalService.buscarPorId(id);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/comuna/{comunaId}")
-    public ResponseEntity<?> crear(@PathVariable Long comunaId,
-                                    @Valid @RequestBody Hostal hostal) {
-        return new ResponseEntity<>(hostalService.guardar(comunaId, hostal), HttpStatus.CREATED);
+    public ResponseEntity<?> crear(@PathVariable Long comunaId, @Valid @RequestBody Hostal hostal) {
+        try {
+            Hostal guardado = hostalService.guardar(comunaId, hostal);
+            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Long id,
-                                         @Valid @RequestBody Hostal hostal) {
-        return new ResponseEntity<>(hostalService.actualizar(id, hostal), HttpStatus.OK);
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Hostal hostal) {
+        try {
+            Hostal actualizado = hostalService.actualizar(id, hostal);
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
-        return new ResponseEntity<>(hostalService.eliminar(id), HttpStatus.OK);
+        try {
+            String resultado = hostalService.eliminar(id);
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
