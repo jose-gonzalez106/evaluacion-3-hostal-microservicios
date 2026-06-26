@@ -14,4 +14,18 @@ public class WebClientConfig {
         return WebClient.builder();
     }
 
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOriginPatterns("*")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                        .allowedHeaders("*")            
+                        .allowCredentials(false);   
+            }
+        };
+    }
+
 }
