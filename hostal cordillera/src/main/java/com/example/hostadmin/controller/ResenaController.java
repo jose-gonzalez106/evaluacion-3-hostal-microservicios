@@ -52,10 +52,12 @@ public class ResenaController {
         }
     }
 
-    @PostMapping("/huesped/{run}")
-    public ResponseEntity<?> crear(@PathVariable String run, @Valid @RequestBody Resena resena) {
+    @PostMapping("/huesped/{run}/hostal/{hostalId}")
+    public ResponseEntity<?> crear(@PathVariable String run,
+                                    @PathVariable Long hostalId,
+                                    @Valid @RequestBody Resena resena) {
         try {
-            Resena guardada = resenaService.guardar(run, resena);
+            Resena guardada = resenaService.guardar(run, hostalId, resena);
             return new ResponseEntity<>(guardada, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
