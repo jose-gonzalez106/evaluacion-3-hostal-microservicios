@@ -116,13 +116,11 @@
 
     <build>
         <plugins>
-
-            <!-- Plugin de Spring Boot para empaquetar y ejecutar la app -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!-- Excluir Lombok del JAR final, solo se necesita en compilación -->
+                    <mainClass>com.empleado.empleados.EmpleadosApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -131,7 +129,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 
