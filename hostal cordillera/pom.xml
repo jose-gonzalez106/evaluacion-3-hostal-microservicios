@@ -94,6 +94,13 @@
             <scope>test</scope>
         </dependency>
 
+         <!-- HATEOAS: dependencia -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <!-- Gestión centralizada de versiones de Spring Cloud -->
