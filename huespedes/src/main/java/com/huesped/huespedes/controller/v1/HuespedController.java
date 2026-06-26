@@ -1,4 +1,4 @@
-package com.huesped.huespedes.controller;
+package com.huesped.huespedes.controller.v1;
 
 import java.util.List;
 
