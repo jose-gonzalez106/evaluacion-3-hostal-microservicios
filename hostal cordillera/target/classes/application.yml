@@ -1,41 +1,41 @@
 spring:
+    main:
+        allow-bean-definition-overriding: true
     application:
-        name: hostal # Nombre del microservicio registrado en Eureka
-
+        name: hostal
     datasource:
-        url: jdbc:mysql://localhost:3306/hostaldb?useSSL=false&serverTimezone=America/Santiago&createDatabaseIfNotExist=true # URL de conexión a MySQL
-        username: root # Usuario de base de datos
-        password: "" # Contraseña de base de datos
-        driver-class-name: com.mysql.cj.jdbc.Driver # Driver JDBC para MySQL
-
+        url: jdbc:mysql://localhost:3306/hostaldb?useSSL=false&serverTimezone=America/Santiago&createDatabaseIfNotExist=true
+        username: root
+        password: ""
+        driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
-            ddl-auto: update # Actualiza el esquema automáticamente sin borrar datos
-        show-sql: true # Muestra las consultas SQL en consola
+            ddl-auto: update
+        show-sql: true
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.MySQLDialect # Dialecto para MySQL 8
-                format_sql: true # Formatea el SQL para mejor legibilidad
+                dialect: org.hibernate.dialect.MySQLDialect
+                format_sql: true
 
 server:
-    port: 8082 # Puerto donde corre este microservicio
+    port: 8082
 
 springdoc:
     api-docs:
-        enabled: true # Habilita la generación de documentación OpenAPI
-        path: /hostal/api-docs # Ruta donde se expone el JSON de la API
+        enabled: true
+        path: /hostal/api-docs
     swagger-ui:
-        enabled: true # Habilita la interfaz gráfica de Swagger
-        path: /swagger-ui/index.html # Ruta de acceso a la UI de Swagger
+        enabled: true
+        path: /swagger-ui/index.html
 
 logging:
     level:
-        com.example.hostadmin: DEBUG # Logs detallados del paquete principal
-        org.hibernate.SQL: DEBUG # Logs de consultas SQL de Hibernate
+        com.example.hostadmin: DEBUG
+        org.hibernate.SQL: DEBUG
 
 eureka:
     client:
-        register-with-eureka: true # Registra este servicio en Eureka
-        fetch-registry: true # Descarga el registro de otros servicios
+        register-with-eureka: true
+        fetch-registry: true
         service-url:
-            defaultZone: http://localhost:8761/eureka/ # URL del servidor Eureka
+            defaultZone: http://localhost:8761/eureka/
