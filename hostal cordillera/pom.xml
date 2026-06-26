@@ -100,6 +100,11 @@
         <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
 
+        <!-- Eureka Client: para registrarse en el servidor de descubrimiento -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
 
     </dependencies>
 
