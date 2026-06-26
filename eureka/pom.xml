@@ -17,7 +17,7 @@
     <artifactId>eureka</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>eureka</name>
-    <description>Servidor Eureka para descubrimiento de microservicios</description>
+    <description>Servidor Eureka</description>
 
     <properties>
         <java.version>21</java.version>

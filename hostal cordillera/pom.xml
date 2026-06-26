@@ -14,11 +14,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.empleado</groupId>
-    <artifactId>empleados</artifactId>
+    <groupId>com.example.hostadmin</groupId>
+    <artifactId>hostadmin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>empleados</name>
-    <description>Microservicio de empleados</description>
+    <name>hostadmin</name>
+    <description>Microservicio Hostal Cordillera</description>
 
     <properties>
         <java.version>21</java.version>

@@ -16,7 +16,7 @@
     <artifactId>gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>gateway</name>
-    <description>API Gateway del sistema Hostal</description>
+    <description>API Gateway</description>
 
     <properties>
         <java.version>21</java.version>

@@ -22,7 +22,8 @@ spring:
         - id: hostal-service
           uri: lb://hostal
           predicates:
-            - Path=/api/v1/hostal/**, /api/v1/reservas/**, /api/v1/habitaciones/**, /api/v1/pagos/**, /api/v1/resenas/**, /api/v1/regiones/**, /api/v1/comunas/**, /api/v1/tipos-empleado/**, /hostal/api-docs/**
+            - Path=/api/v1/hostales/**, /api/v1/reservas/**, /api/v1/habitaciones/**, /api/v1/pagos/**, /api/v1/resenas/**, /api/v1/regiones/**, /api/v1/comunas/**, /api/v1/tipos-empleado/**, /hostal/api-docs/**
+
 
 eureka:
   client:
