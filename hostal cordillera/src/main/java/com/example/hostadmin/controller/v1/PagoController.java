@@ -19,7 +19,7 @@ import com.example.hostadmin.service.PagoService;
 
 import jakarta.validation.Valid;
 
-@RestController("regionControllerV1")
+@RestController("pagoControllerV1")
 @RequestMapping("/api/v1/pagos")
 public class PagoController {
 
