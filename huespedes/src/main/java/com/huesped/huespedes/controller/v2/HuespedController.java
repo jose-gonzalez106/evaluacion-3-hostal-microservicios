@@ -21,7 +21,7 @@ import com.huesped.huespedes.service.HuespedService;
 import jakarta.validation.Valid;
 
 @RestController("huespedControllerV2")
-@RequestMapping("/api/v1/huespedes")
+@RequestMapping("/api/v2/huespedes")
 public class HuespedController {
 
     @Autowired

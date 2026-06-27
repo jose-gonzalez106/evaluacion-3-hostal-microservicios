@@ -20,7 +20,7 @@ import com.huesped.huespedes.service.HuespedService;
 
 import jakarta.validation.Valid;
 
-@RestController
+@RestController("huespedControllerV1")
 @RequestMapping("/api/v1/huespedes")
 public class HuespedController {
 
