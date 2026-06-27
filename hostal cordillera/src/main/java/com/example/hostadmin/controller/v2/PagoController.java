@@ -1,4 +1,4 @@
-package com.example.hostadmin.controller;
+package com.example.hostadmin.controller.v2;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import com.example.hostadmin.service.PagoService;
 
 import jakarta.validation.Valid;
 
-@RestController
-@RequestMapping("/api/v1/pagos")
+@RestController("PagoControllerV2")
+@RequestMapping("/api/v2/pagos")
 public class PagoController {
 
     @Autowired

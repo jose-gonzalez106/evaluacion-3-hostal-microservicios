@@ -1,4 +1,4 @@
-package com.example.hostadmin.controller;
+package com.example.hostadmin.controller.v1;
 
 import java.util.List;
 
@@ -9,64 +9,53 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hostadmin.DTO.HostalDTO;
-import com.example.hostadmin.model.Hostal;
-import com.example.hostadmin.service.HostalService;
+import com.example.hostadmin.DTO.PagoDTO;
+import com.example.hostadmin.model.Pago;
+import com.example.hostadmin.service.PagoService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/hostales")
-public class HostalController {
+@RequestMapping("/api/v1/pagos")
+public class PagoController {
 
     @Autowired
-    private HostalService hostalService;
+    private PagoService pagoService;
 
     @GetMapping
-    public ResponseEntity<List<HostalDTO>> obtenerTodos() {
-        List<HostalDTO> lista = hostalService.obtenerTodos();
+    public ResponseEntity<List<PagoDTO>> obtenerTodos() {
+        List<PagoDTO> lista = pagoService.obtenerTodos();
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerPorId(@PathVariable Long id) {
         try {
-            HostalDTO dto = hostalService.buscarPorId(id);
+            PagoDTO dto = pagoService.buscarPorId(id);
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/comuna/{comunaId}")
-    public ResponseEntity<?> crear(@PathVariable Long comunaId, @Valid @RequestBody Hostal hostal) {
+    @PostMapping("/reserva/{reservaId}")
+    public ResponseEntity<?> registrar(@PathVariable Long reservaId, @Valid @RequestBody Pago pago) {
         try {
-            Hostal guardado = hostalService.guardar(comunaId, hostal);
+            Pago guardado = pagoService.registrar(reservaId, pago);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody Hostal hostal) {
-        try {
-            Hostal actualizado = hostalService.actualizar(id, hostal);
-            return new ResponseEntity<>(actualizado, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
-            String resultado = hostalService.eliminar(id);
+            String resultado = pagoService.eliminar(id);
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

@@ -1,4 +1,4 @@
-package com.example.hostadmin.controller;
+package com.example.hostadmin.controller.v1;
 
 import java.util.List;
 
