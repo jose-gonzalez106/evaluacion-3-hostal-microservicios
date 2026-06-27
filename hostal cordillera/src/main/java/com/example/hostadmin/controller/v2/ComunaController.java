@@ -20,7 +20,7 @@ import com.example.hostadmin.service.ComunaService;
 
 import jakarta.validation.Valid;
 
-@RestController("ComunaControllerV2")
+@RestController("comunaControllerV2")
 @RequestMapping("/api/v2/comunas")
 public class ComunaController {
 

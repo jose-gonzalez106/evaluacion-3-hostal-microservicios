@@ -21,7 +21,7 @@ import com.example.hostadmin.service.HabitacionService;
 
 import jakarta.validation.Valid;
 
-@RestController
+@RestController("habitacionControllerV1")
 @RequestMapping("/api/v1/habitaciones")
 public class HabitacionController {
 

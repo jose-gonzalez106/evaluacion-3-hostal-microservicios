@@ -19,7 +19,7 @@ import com.example.hostadmin.service.TipoEmpleadoService;
 
 import jakarta.validation.Valid;
 
-@RestController
+@RestController("tipoEmpleadoControllerV1")
 @RequestMapping("/api/v1/tipos-empleado")
 public class TipoEmpleadoController {
 

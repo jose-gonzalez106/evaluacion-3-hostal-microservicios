@@ -20,7 +20,7 @@ import com.example.hostadmin.service.RegionService;
 
 import jakarta.validation.Valid;
 
-@RestController
+@RestController("regionControllerV1")
 @RequestMapping("/api/v1/regiones")
 public class RegionController {
 
