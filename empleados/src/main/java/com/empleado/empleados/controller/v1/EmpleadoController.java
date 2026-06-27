@@ -1,4 +1,4 @@
-package com.empleado.empleados.controller;
+package com.empleado.empleados.controller.v1;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import com.empleado.empleados.service.EmpleadoService;
 
 import jakarta.validation.Valid;
 
-@RestController
+@RestController("empleadoControllerV1")
 @RequestMapping("/api/v1/empleados")
 public class EmpleadoController {
 
