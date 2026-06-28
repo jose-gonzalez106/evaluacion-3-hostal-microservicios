@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hostadmin.DTO.HuespedDTO;
@@ -19,21 +18,18 @@ import com.example.hostadmin.repository.HabitacionRepository;
 import com.example.hostadmin.repository.ReservaRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ReservaService {
 
-        @Autowired
-        private ReservaRepository reservaRepository;
-
-        @Autowired
-        private HabitacionRepository habitacionRepository;
-
-        @Autowired
-        private HuespedClient huespedClient;
+        private final ReservaRepository reservaRepository;
+        private final HabitacionRepository habitacionRepository;
+        private final HuespedClient huespedClient;
 
         public List<ReservaDTO> obtenerTodas() {
                 log.info("[ReservaService] Obteniendo todas las reservas");

@@ -2,7 +2,6 @@ package com.example.hostadmin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hostadmin.DTO.RegionDTO;
@@ -11,14 +10,16 @@ import com.example.hostadmin.model.Region;
 import com.example.hostadmin.repository.RegionRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class RegionService {
-    @Autowired
-    private RegionRepository regionRepository;
+    
+    private final RegionRepository regionRepository;
 
 
     public List<RegionDTO> obtenerTodas() {

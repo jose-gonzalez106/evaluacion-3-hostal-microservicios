@@ -2,7 +2,6 @@ package com.example.hostadmin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hostadmin.DTO.HuespedDTO;
@@ -16,21 +15,19 @@ import com.example.hostadmin.repository.HostalRepository;
 import com.example.hostadmin.repository.ResenaRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ResenaService {
 
-    @Autowired
-    private ResenaRepository resenaRepository;
-
-    @Autowired
-    private HuespedClient huespedClient;
-
-    @Autowired
-    private HostalRepository hostalRepository;
+    
+    private final ResenaRepository resenaRepository;
+    private final HuespedClient huespedClient;
+    private final HostalRepository hostalRepository;
 
     public List<ResenniaDTO> obtenerTodas() {
         log.info("[ResenaService] Obteniendo todas las resenas");

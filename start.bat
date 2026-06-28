@@ -37,5 +37,5 @@ echo Eureka dashboard: http://localhost:8761
 echo Huespedes: http://localhost:8081
 echo Hostal Cordillera: http://localhost:8082
 echo Empleados: http://localhost:8083
-echo Gateway: http://localhost:8090
+echo Gateway: http://localhost:8099
 pause

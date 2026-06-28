@@ -2,7 +2,6 @@ package com.example.hostadmin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hostadmin.DTO.HostalDTO;
@@ -14,17 +13,18 @@ import com.example.hostadmin.repository.ComunaRepository;
 import com.example.hostadmin.repository.HostalRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class HostalService {
-    @Autowired
-    private HostalRepository hostalRepository;
+    
+    private final HostalRepository hostalRepository;
 
-    @Autowired
-    private ComunaRepository comunaRepository;
+    private final ComunaRepository comunaRepository;
     
     
     public List<HostalDTO> obtenerTodos() {

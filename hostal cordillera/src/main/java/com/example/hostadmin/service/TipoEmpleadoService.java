@@ -2,7 +2,6 @@ package com.example.hostadmin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hostadmin.DTO.TipoEmpleadoDTO;
@@ -12,15 +11,17 @@ import com.example.hostadmin.model.TipoEmpleado;
 import com.example.hostadmin.repository.TipoEmpleadoRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TipoEmpleadoService {
 
-    @Autowired
-    private TipoEmpleadoRepository tipoEmpleadoRepository;
+    
+    private final TipoEmpleadoRepository tipoEmpleadoRepository;
 
     public List<TipoEmpleadoDTO> obtenerTodos() {
         log.info("[TipoEmpleadoService] Obteniendo todos los tipos de empleado");
