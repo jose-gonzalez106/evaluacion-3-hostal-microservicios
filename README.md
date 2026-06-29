@@ -130,24 +130,29 @@ cd empleados
 ```
 
 ## URLs de acceso
-
+Eureka Dashboard  
 ```
-Eureka Dashboard → http://localhost:8761
+http://localhost:8761
 ```
+API Gateway  
 ```
-API Gateway → http://localhost:8099
+http://localhost:8099
 ```
+Swagger UI centralizado  
 ```
-Swagger UI centralizado → http://localhost:8099/swagger-ui/index.html
+http://localhost:8099/swagger-ui/index.html
 ```
+Swagger – Huéspedes  
 ```
-Swagger – Huéspedes → http://localhost:8081/swagger-ui/index.html
+http://localhost:8081/swagger-ui/index.html
 ```
+Swagger – Hostal Cordillera  
 ```
-Swagger – Hostal Cordillera → http://localhost:8082/swagger-ui/index.html
+http://localhost:8082/swagger-ui/index.html
 ```
+Swagger – Empleados  
 ```
-Swagger – Empleados → http://localhost:8083/swagger-ui/index.html
+http://localhost:8083/swagger-ui/index.html
 ```
 
 ## Comunicación entre microservicios
