@@ -47,6 +47,7 @@ services:
   huespedes-service:
     build: ./huespedes
     container_name: huespedes-service
+    restart: on-failure:5
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
       DATABASE_HOST: mysql-db
@@ -61,6 +62,7 @@ services:
   hostal-service:
     build: ./hostal_cordillera
     container_name: hostal-service
+    restart: on-failure:5
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
       DATABASE_HOST: mysql-db
@@ -75,6 +77,7 @@ services:
   empleados-service:
     build: ./empleados
     container_name: empleados-service
+    restart: on-failure:5
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
       DATABASE_HOST: mysql-db
