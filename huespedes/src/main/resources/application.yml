@@ -5,8 +5,8 @@ spring:
         name: huespedes
     datasource:
         url: jdbc:mysql://localhost:3306/db_huespedes?useSSL=false&serverTimezone=America/Santiago&createDatabaseIfNotExist=true
-        username: root
-        password: ""
+        username: ${DATABASE_USERNAME:root}
+        password: ${DATABASE_PASSWORD:}
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
@@ -37,4 +37,4 @@ eureka:
         register-with-eureka: true
         fetch-registry: true
         service-url:
-            defaultZone: http://localhost:8761/eureka/
+            defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE:http://localhost:8761/eureka/}
