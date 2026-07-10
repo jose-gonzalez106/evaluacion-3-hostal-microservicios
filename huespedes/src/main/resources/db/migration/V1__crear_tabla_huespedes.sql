@@ -1,13 +1,12 @@
 CREATE TABLE huespedes (
-    run VARCHAR(10) NOT NULL,          
+    run VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
-    telefono VARCHAR(9) NOT NULL,      
+    telefono VARCHAR(9) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE,
-    comuna_id BIGINT NOT NULL,      --comuna desde hostal
+    comuna_id BIGINT NOT NULL,
     PRIMARY KEY (run)
 );
-
 
 INSERT INTO huespedes (run, nombre, apellido, telefono, correo, comuna_id) VALUES
 ('12345678-9', 'Ana', 'Pérez', '912345678', 'ana.perez@example.com', 1),

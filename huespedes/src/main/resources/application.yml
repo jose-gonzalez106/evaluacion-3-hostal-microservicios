@@ -4,13 +4,13 @@ spring:
     application:
         name: huespedes
     datasource:
-        url: jdbc:mysql://localhost:3306/db_huespedes?useSSL=false&serverTimezone=America/Santiago&createDatabaseIfNotExist=true
+        url: jdbc:mysql://${DATABASE_HOST:mysql-db}:3306/db_huespedes?useSSL=false&serverTimezone=America/Santiago&createDatabaseIfNotExist=true
         username: ${DATABASE_USERNAME:root}
         password: ${DATABASE_PASSWORD:}
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
-            ddl-auto: validate
+            ddl-auto: update
         show-sql: true
         properties:
             hibernate:
