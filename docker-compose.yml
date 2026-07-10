@@ -1,19 +1,18 @@
 version: "3.8"
 
 services:
-  mariadb-db:
-    image: mariadb:10.11
-    container_name: mariadb-db
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: db_imperio_jedis_dev
     networks:
-      - network-jedi
+      - network-hostal
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -24,7 +23,7 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - network-jedi
+      - network-hostal
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
       interval: 15s
@@ -36,48 +35,57 @@ services:
     build: ./gateway
     container_name: api-gateway
     ports:
-      - "8080:8080"
+      - "8099:8099"
     environment:
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_PROFILES_ACTIVE: dev
     networks:
-      - network-jedi
+      - network-hostal
     depends_on:
       eureka-server:
         condition: service_healthy
 
-  jedis-service:
-    build: ./jedis
-    container_name: jedis-service
+  huespedes-service:
+    build: ./huespedes
+    container_name: huespedes-service
     environment:
-      SPRING_PROFILES_ACTIVE: dev
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      DATABASE_HOST: mariadb-db
-      GATEWAY_URL: http://localhost:8080
+      DATABASE_HOST: mysql-db
     networks:
-      - network-jedi
+      - network-hostal
     depends_on:
-      mariadb-db:
+      mysql-db:
         condition: service_healthy
       eureka-server:
         condition: service_healthy
 
-  sables-service:
-    build: ./sables
-    container_name: sables-service
+  hostal-service:
+    build: ./hostal_cordillera
+    container_name: hostal-service
     environment:
-      SPRING_PROFILES_ACTIVE: dev
       EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      DATABASE_HOST: mariadb-db
-      GATEWAY_URL: http://localhost:8080
+      DATABASE_HOST: mysql-db
     networks:
-      - network-jedi
+      - network-hostal
     depends_on:
-      mariadb-db:
+      mysql-db:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+
+  empleados-service:
+    build: ./empleados
+    container_name: empleados-service
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      DATABASE_HOST: mysql-db
+    networks:
+      - network-hostal
+    depends_on:
+      mysql-db:
         condition: service_healthy
       eureka-server:
         condition: service_healthy
 
 networks:
-  network-jedi:
+  network-hostal:
     driver: bridge
